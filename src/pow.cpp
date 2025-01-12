@@ -31,7 +31,8 @@ bool AllowMinDifficultyForBlock(const CBlockIndex* pindexLast, const CBlockHeade
 
 unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock, const Consensus::Params& params)
 {
-    unsigned int nProofOfWorkLimit = UintToArith256(params.powLimit).GetCompact();
+    // Set the maximum target to the maximum 256-bit number
+    unsigned int nProofOfWorkLimit = UintToArith256(uint256S("0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF")).GetCompact();
 
     // Genesis block
     if (pindexLast == NULL)
@@ -89,6 +90,9 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
 
 unsigned int CalculateNextWorkRequired(const CBlockIndex* pindexLast, int64_t nFirstBlockTime, const Consensus::Params& params)
 {
+    // Set the maximum target to the maximum 256-bit number
+    unsigned int nProofOfWorkLimit = UintToArith256(uint256S("0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF")).GetCompact();
+
     if (params.fPowNoRetargeting)
         return pindexLast->nBits;
 
@@ -121,7 +125,7 @@ bool CheckProofOfWork(uint256 hash, unsigned int nBits, const Consensus::Params&
     bnTarget.SetCompact(nBits, &fNegative, &fOverflow);
 
     // Check range
-    if (fNegative || bnTarget == 0 || fOverflow || bnTarget > UintToArith256(params.powLimit))
+    if (fNegative || bnTarget == 0 || fOverflow || bnTarget > UintToArith256(uint256S("0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF")))
         return false;
 
     // Check proof of work matches claimed amount
