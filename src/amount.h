@@ -29,7 +29,7 @@ extern const std::string CURRENCY_UNIT;
  * critical; in unusual circumstances like a(nother) overflow bug that allowed
  * for the creation of coins out of thin air modification could lead to a fork.
  * */
-static const CAmount MAX_MONEY = 10000000000 * COIN; // Dogecoin: maximum of 100B coins (given some randomness), max transaction 10,000,000,000
+static const CAmount MAX_MONEY = 115792089237316195423570985008687907853269984665640564039457584007913129639936  * COIN; // Dogecoin: maximum of 100B coins (given some randomness), max transaction 10,000,000,000
 inline bool MoneyRange(const CAmount& nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
 
 /**
